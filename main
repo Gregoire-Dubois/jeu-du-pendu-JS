@@ -1,0 +1,88 @@
+/*
+Créer un jeu du pendu
+V 0) créer un dictionnaire avec des mots contenus
+V 1) choisir de facon aléatoire un mot dans le dictionnaire
+V 2) afficher au joueur le mot retenu aléatoirement sous forme d'étoiles
+3) demander au joueur de saisir 1 lettre
+4) si la lettre est dans le mot alors les étoiles disparaissent pour faire apparaitre la lettre trouvée
+5) si la lettre n'est pas dans le mot alors le joueur peurd une chance. le joueur a 5 chances
+*/
+
+function wordsGenerator() {
+  words = ["chien", "chat", "poisson", "tortue"];
+  min = 0;
+  max = words.length;
+  randomChoice = Math.random() * (max - min);
+  choice = Math.round(randomChoice);
+  console.log(words[choice]);
+
+  // Mask stars
+  let stars = ["*"];
+
+  // Replace letters by stars
+  let starsWord = [""];
+
+  for (let i of words[choice][0]) {
+    i = stars;
+    starsWord = starsWord + i;
+  }
+  console.log(starsWord);
+}
+
+// main loop
+while ((game = true)) {
+  // loop generator words
+  while ((play = true)) {
+    wordsGenerator();
+
+    // Writting loop and count attempts
+    let chances = 2;
+    let attempt = 0;
+
+    let unmask = [];
+    let star = ["*"];
+
+    while (attempt <= chances) {
+      attempt++;
+
+      text = prompt("Tentez votre chance avec une lettre à vérifier");
+
+      for (let i of words[choice]) {
+        if (i === text) {
+          attempt--;
+          unmask = unmask + i;
+        } else {
+          unmask = unmask + star;
+        }
+        // attempt can't be inferior 0
+        if (attempt < 0) {
+          attempt === 0;
+        }
+      }
+      console.log(unmask);
+      console.log("tentative n° ", attempt);
+      continue;
+    }
+
+    message = prompt(
+      "Voulez vous recommencer ? Tapez 'c' pour continuer sinon tapez n'importe quoi "
+    );
+
+    if (message === "c") {
+      play = true;
+      console.log("on continue");
+    } else {
+      play = false;
+      break;
+    }
+  }
+
+  if (message === "c") {
+    game = true;
+    console.log("on continue");
+  } else {
+    game = false;
+    console.log("c'est fini");
+    break;
+  }
+}
