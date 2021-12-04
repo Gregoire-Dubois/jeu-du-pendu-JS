@@ -8,81 +8,57 @@ V 2) afficher au joueur le mot retenu aléatoirement sous forme d'étoiles
 5) si la lettre n'est pas dans le mot alors le joueur peurd une chance. le joueur a 5 chances
 */
 
-function wordsGenerator() {
-  words = ["chien", "chat", "poisson", "tortue"];
-  min = 0;
-  max = words.length;
-  randomChoice = Math.random() * (max - min);
-  choice = Math.round(randomChoice);
-  console.log(words[choice]);
+// Créer la boucle principale du jeu
+let play = new Boolean("true");
 
-  // Mask stars
-  let stars = ["*"];
+while(playGame = play){
+  play = prompt("Voulez vous continuer la partie ? Tapez 'y'")
+  if(play != 'y'){
+    play = false;
 
-  // Replace letters by stars
-  let starsWord = [""];
+  }else{
+    // Générer une liste de mots
+    let wordsList = ["React", "vu", "Angular", "Python", "Java"];
 
-  for (let i of words[choice][0]) {
-    i = stars;
-    starsWord = starsWord + i;
-  }
-  console.log(starsWord);
-}
+    // Créer un choix aléatoire d'un nombre dans le rang compris entre 0 et le dernier indexe du array wordsList
+    let indexMin = 0;
+    let indexMax = wordsList.length;
+    let number = Math.random(indexMax)*(indexMax - indexMin);
+    let finalNumber = Math.round(number);
+    
+    // Afficher un mot du array de façon aléatoire
+    let wordChoice = wordsList[finalNumber];
+    console.log(wordChoice); 
 
-// main loop
-while ((game = true)) {
-  // loop generator words
-  while ((play = true)) {
-    wordsGenerator();
+    // afficher le mot sous forme d'étoiles
+    let motCache = []
+    for(let i of wordChoice){
+      i = "*";
+      motCache=motCache+i
+    }
+    console.log(motCache)
 
-    // Writting loop and count attempts
-    let chances = 2;
-    let attempt = 0;
+    // instantiantion du compteur de tentative
+    let count = 0
+    // boucle secondaire de jeu 
 
-    let unmask = [];
-    let star = ["*"];
+    let letter =new Array;
+    let unMaskWord = new Array;
 
-    while (attempt <= chances) {
-      attempt++;
+    while(count <= 2){
+      count++
+      test = prompt("Tapez une lettre que vous pensez être dans le mot mystère")
 
-      text = prompt("Tentez votre chance avec une lettre à vérifier");
-
-      for (let i of words[choice]) {
-        if (i === text) {
-          attempt--;
-          unmask = unmask + i;
-        } else {
-          unmask = unmask + star;
-        }
-        // attempt can't be inferior 0
-        if (attempt < 0) {
-          attempt === 0;
+      for (const [index, element] of Object.entries(wordChoice)){
+        if (element === test){
+          letter = element;
+          unMaskWord.splice(index, index+1, letter)
+        }else{
+          letter = "*";
+          unMaskWord.splice(index, index+1, letter)
         }
       }
-      console.log(unmask);
-      console.log("tentative n° ", attempt);
-      continue;
+      console.log(unMaskWord.toString())
     }
-
-    message = prompt(
-      "Voulez vous recommencer ? Tapez 'c' pour continuer sinon tapez n'importe quoi "
-    );
-
-    if (message === "c") {
-      play = true;
-      console.log("on continue");
-    } else {
-      play = false;
-      break;
-    }
-  }
-
-  if (message === "c") {
-    game = true;
-    console.log("on continue");
-  } else {
-    game = false;
-    console.log("c'est fini");
-    break;
   }
 }
