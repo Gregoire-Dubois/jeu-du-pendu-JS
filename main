@@ -3,7 +3,7 @@ Créer un jeu du pendu
 V 0) créer un dictionnaire avec des mots contenus
 V 1) choisir de facon aléatoire un mot dans le dictionnaire
 V 2) afficher au joueur le mot retenu aléatoirement sous forme d'étoiles
-3) demander au joueur de saisir 1 lettre
+V 3) demander au joueur de saisir 1 lettre
 4) si la lettre est dans le mot alors les étoiles disparaissent pour faire apparaitre la lettre trouvée
 5) si la lettre n'est pas dans le mot alors le joueur peurd une chance. le joueur a 5 chances
 */
