@@ -1,88 +1,66 @@
 /*
-Créer un jeu du pendu
-V 0) créer un dictionnaire avec des mots contenus
-V 1) choisir de facon aléatoire un mot dans le dictionnaire
-V 2) afficher au joueur le mot retenu aléatoirement sous forme d'étoiles
-3) demander au joueur de saisir 1 lettre
-4) si la lettre est dans le mot alors les étoiles disparaissent pour faire apparaitre la lettre trouvée
-5) si la lettre n'est pas dans le mot alors le joueur peurd une chance. le joueur a 5 chances
+Ecrire un code qui simule un jeu du pendu
 */
 
-function wordsGenerator() {
-  words = ["chien", "chat", "poisson", "tortue"];
-  min = 0;
-  max = words.length;
-  randomChoice = Math.random() * (max - min);
-  choice = Math.round(randomChoice);
-  console.log(words[choice]);
+// Créer la boucle principale du jeu
+let play = true;
+let response = "";
 
-  // Mask stars
-  let stars = ["*"];
+while (play) {
 
-  // Replace letters by stars
-  let starsWord = [""];
+  // Générer un mot à partir d'un liste de mots
+  const wordsList = ["React", "Vue", "Angular", "Python", "Java"];
+  const randomNumber = Math.round(
+    Math.random(wordsList.length) * wordsList.length
+  );
+  const randomWord = wordsList[randomNumber];
+  console.log("====================");
+  console.log("Mot aléatoire: ", randomWord);
+  console.log("====================");
 
-  for (let i of words[choice][0]) {
-    i = stars;
-    starsWord = starsWord + i;
+  // afficher le mot sous forme d'étoiles
+  let mask = [];
+  for (let i of randomWord) {
+    mask.push("*");
   }
-  console.log(starsWord);
-}
 
-// main loop
-while ((game = true)) {
-  // loop generator words
-  while ((play = true)) {
-    wordsGenerator();
+  // Tour de jeu
+  let turn = 0;
+  let attempt = "";
+  let victory = 0; //est egal à 1 si lettre trouvée
 
-    // Writting loop and count attempts
-    let chances = 2;
-    let attempt = 0;
-
-    let unmask = [];
-    let star = ["*"];
-
-    while (attempt <= chances) {
-      attempt++;
-
-      text = prompt("Tentez votre chance avec une lettre à vérifier");
-
-      for (let i of words[choice]) {
-        if (i === text) {
-          attempt--;
-          unmask = unmask + i;
-        } else {
-          unmask = unmask + star;
-        }
-        // attempt can't be inferior 0
-        if (attempt < 0) {
-          attempt === 0;
-        }
-      }
-      console.log(unmask);
-      console.log("tentative n° ", attempt);
-      continue;
-    }
-
-    message = prompt(
-      "Voulez vous recommencer ? Tapez 'c' pour continuer sinon tapez n'importe quoi "
+  while (turn <= 3) {
+    attempt = prompt(
+      "Tapez une lettre que vous pensez être dans le mot mystère"
     );
+    console.log("tour: ", turn);
 
-    if (message === "c") {
-      play = true;
-      console.log("on continue");
-    } else {
-      play = false;
-      break;
+    // Boucle de remplacement
+    for (const [index, element] of Object.entries(randomWord)) {
+      victory = 0;
+      if (element === attempt) {
+        mask.splice(index, 1, element);
+        victory = 1;
+      }
+    }
+
+    // Incrémente turn si erreur (à revoir)
+    if (victory === 0) turn++;
+
+    // Compte rendu du tour actuel
+    console.log("résultat au tour ", turn, ":" , mask.join(""));
+
+    if (randomWord === mask.join("")) {
+      console.log("félécitation");
+      break
     }
   }
 
-  if (message === "c") {
-    game = true;
-    console.log("on continue");
-  } else {
-    game = false;
-    console.log("c'est fini");
-    break;
-  }
+  console.log("===================");
+  console.log("Résultat final: ", mask.join(""));
+  console.log("===================");
+
+  response = prompt("Pour quitter, tapez 'n'");
+  // Quitter la boucle
+  if (response === "n") play = false;
 }
