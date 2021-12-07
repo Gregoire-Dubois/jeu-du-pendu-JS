@@ -1,5 +1,5 @@
 /*
-Ecrire un code qui simule un jeu du pendu
+Jeu du pendu
 */
 
 // Créer la boucle principale du jeu
@@ -9,7 +9,7 @@ let response = "";
 while (play) {
 
   // Générer un mot à partir d'un liste de mots
-  const wordsList = ["React", "Vue", "Angular", "Python", "Java"];
+  const wordsList = ["react", "vue", "angular", "python", "javascript"];
   const randomNumber = Math.round(
     Math.random(wordsList.length) * wordsList.length
   );
@@ -27,33 +27,42 @@ while (play) {
   // Tour de jeu
   let turn = 0;
   let attempt = "";
-  let victory = 0; //est egal à 1 si lettre trouvée
+  let victory = 0;
+  let luck = 0;
 
-  while (turn <= 3) {
+  while (turn <= 6) {
+    victory = 0;
+    joker = 0;
     attempt = prompt(
-      "Tapez une lettre que vous pensez être dans le mot mystère"
+      "Tapez une lettre de votre choix"
     );
-    console.log("tour: ", turn);
-
     // Boucle de remplacement
     for (const [index, element] of Object.entries(randomWord)) {
-      victory = 0;
+      ;
       if (element === attempt) {
         mask.splice(index, 1, element);
-        victory = 1;
+        victory++;
+        turn=-1;
       }
     }
 
-    // Incrémente turn si erreur (à revoir)
-    if (victory === 0) turn++;
-
     // Compte rendu du tour actuel
     console.log("résultat au tour ", turn, ":" , mask.join(""));
+
+    if (victory <1){
+      luck ++;
+      if (luck ===3){
+        console.log("Vous avez utilisé vos 3 jokers")
+        break;
+      }
+    }
 
     if (randomWord === mask.join("")) {
       console.log("félécitation");
       break
     }
+   
+    turn++;
   }
 
   console.log("===================");
